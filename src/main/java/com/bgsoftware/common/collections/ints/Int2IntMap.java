@@ -31,27 +31,13 @@ public interface Int2IntMap {
 
     Map<Integer, Integer> handle();
 
-    default boolean isEmpty() {
-        return size() <= 0;
-    }
+    boolean isEmpty();
 
-    default boolean containsKey(int key) {
-        return get(key).isPresent();
-    }
+    boolean containsKey(int key);
 
-    default int getOrDefault(int key, int def) {
-        OptionalInt value = get(key);
-        return value.orElse(def);
-    }
+    int getOrDefault(int key, int def);
 
-    default int computeIfAbsent(int key, Int2IntFunction mappingFunction) {
-        OptionalInt valueOptional = get(key);
-        if (valueOptional.isPresent())
-            return valueOptional.getAsInt();
-        int value = mappingFunction.apply(key);
-        put(key, value);
-        return value;
-    }
+    int computeIfAbsent(int key, Int2IntFunction mappingFunction);
 
     interface Entry {
 

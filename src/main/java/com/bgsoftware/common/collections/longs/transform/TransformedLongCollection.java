@@ -2,17 +2,14 @@ package com.bgsoftware.common.collections.longs.transform;
 
 import com.bgsoftware.common.collections.internal.transform.TransformedCollection;
 import com.bgsoftware.common.collections.internal.transform.TransformedSpliterator;
-import com.bgsoftware.common.collections.ints.empty.EmptyIntCollection;
 import com.bgsoftware.common.collections.longs.LongCollection;
 import com.bgsoftware.common.collections.longs.LongIterator;
 import com.bgsoftware.common.collections.transform.LongTransformer;
 import com.bgsoftware.common.collections.transform.Transformer;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -26,16 +23,7 @@ public class TransformedLongCollection<E> implements Collection<E> {
     protected Transformer<Long, E> boxedTransformer;
 
     public static <E> TransformedLongCollection<E> create(LongCollection handle, LongTransformer<E> transformer) {
-        return handle instanceof RandomAccess ? new RandomAccessTransformedIntCollection<>(handle, transformer) :
-                new TransformedLongCollection<>(handle, transformer);
-    }
-
-    private static class RandomAccessTransformedIntCollection<E> extends TransformedLongCollection<E> implements RandomAccess {
-
-        private RandomAccessTransformedIntCollection(LongCollection handle, LongTransformer<E> transformer) {
-            super(handle, transformer);
-        }
-
+        return new TransformedLongCollection<>(handle, transformer);
     }
 
     protected TransformedLongCollection(LongCollection handle, LongTransformer<E> transformer) {
@@ -65,7 +53,7 @@ public class TransformedLongCollection<E> implements Collection<E> {
 
     @Override
     public Object[] toArray() {
-        if(isEmpty()) return EMPTY_ARR;
+        if (isEmpty()) return EMPTY_ARR;
 
         long[] elements = this.handle.toArray();
         Object[] arr = new Object[elements.length];
@@ -83,7 +71,7 @@ public class TransformedLongCollection<E> implements Collection<E> {
             a = Arrays.copyOf(a, size);
         }
 
-        for(int i = 0; i < size; ++i) {
+        for (int i = 0; i < size; ++i) {
             a[i] = (T) this.transformer.transformLong(elements[i]);
         }
 

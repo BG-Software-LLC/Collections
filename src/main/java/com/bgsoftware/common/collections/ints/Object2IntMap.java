@@ -32,26 +32,13 @@ public interface Object2IntMap<K> {
 
     Map<K, Integer> handle();
 
-    default boolean isEmpty() {
-        return size() <= 0;
-    }
+    boolean isEmpty();
 
-    default boolean containsKey(K key) {
-        return get(key).isPresent();
-    }
+    boolean containsKey(K key);
 
-    default int getOrDefault(K key, int def) {
-        return get(key).orElse(def);
-    }
+    int getOrDefault(K key, int def);
 
-    default int computeIfAbsent(K key, ToIntFunction<K> mappingFunction) {
-        OptionalInt valueOptional = get(key);
-        if (valueOptional.isPresent())
-            return valueOptional.getAsInt();
-        int value = mappingFunction.applyAsInt(key);
-        put(key, value);
-        return value;
-    }
+    int computeIfAbsent(K key, ToIntFunction<K> mappingFunction);
 
     interface Entry<K> {
 

@@ -5,7 +5,6 @@ import com.bgsoftware.common.collections.transform.Transformer;
 import java.util.AbstractCollection;
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -16,16 +15,7 @@ public class TransformedCollection<A, B> extends AbstractCollection<B> implement
     protected final Transformer<A, B> transformer;
 
     public static <A, B> TransformedCollection<A, B> create(Collection<A> handle, Transformer<A, B> transformer) {
-        return handle instanceof RandomAccess ? new RandomAccessTransformedCollection<>(handle, transformer) :
-                new TransformedCollection<>(handle, transformer);
-    }
-
-    private static class RandomAccessTransformedCollection<A, B> extends TransformedCollection<A, B> implements RandomAccess {
-
-        private RandomAccessTransformedCollection(Collection<A> handle, Transformer<A, B> transformer) {
-            super(handle, transformer);
-        }
-
+        return new TransformedCollection<>(handle, transformer);
     }
 
     protected TransformedCollection(Collection<A> handle, Transformer<A, B> transformer) {

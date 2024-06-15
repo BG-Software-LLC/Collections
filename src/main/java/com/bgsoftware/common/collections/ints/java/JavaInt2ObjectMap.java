@@ -10,6 +10,7 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
+import java.util.function.IntFunction;
 
 public class JavaInt2ObjectMap<V> implements Int2ObjectMap<V> {
 
@@ -80,6 +81,26 @@ public class JavaInt2ObjectMap<V> implements Int2ObjectMap<V> {
     @Override
     public Map<Integer, V> handle() {
         return this.handle;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.handle.isEmpty();
+    }
+
+    @Override
+    public boolean containsKey(int key) {
+        return this.handle.containsKey(key);
+    }
+
+    @Override
+    public V getOrDefault(int key, V def) {
+        return this.handle.getOrDefault(key, def);
+    }
+
+    @Override
+    public V computeIfAbsent(int key, IntFunction<V> mappingFunction) {
+        return this.handle.computeIfAbsent(key, mappingFunction::apply);
     }
 
     @Override

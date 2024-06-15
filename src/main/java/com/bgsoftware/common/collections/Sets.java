@@ -1,6 +1,7 @@
 package com.bgsoftware.common.collections;
 
 import com.bgsoftware.common.collections.internal.Implementation;
+import com.bgsoftware.common.collections.internal.immutable.UnmodifiableSet;
 import com.bgsoftware.common.collections.internal.sets.FastUtilsSetsFactory;
 import com.bgsoftware.common.collections.internal.sets.JavaSetsFactory;
 import com.bgsoftware.common.collections.internal.sets.SetStrategy;
@@ -9,10 +10,12 @@ import com.bgsoftware.common.collections.internal.transform.TransformedSet;
 import com.bgsoftware.common.collections.ints.IntCollection;
 import com.bgsoftware.common.collections.ints.IntSet;
 import com.bgsoftware.common.collections.ints.empty.EmptyIntSet;
+import com.bgsoftware.common.collections.ints.immutable.UnmodifiableIntSet;
 import com.bgsoftware.common.collections.ints.transform.TransformedIntSet;
 import com.bgsoftware.common.collections.longs.LongCollection;
 import com.bgsoftware.common.collections.longs.LongSet;
 import com.bgsoftware.common.collections.longs.empty.EmptyLongSet;
+import com.bgsoftware.common.collections.longs.immutable.UnmodifiableLongSet;
 import com.bgsoftware.common.collections.longs.transform.TransformedLongSet;
 import com.bgsoftware.common.collections.transform.IntTransformer;
 import com.bgsoftware.common.collections.transform.LongTransformer;
@@ -192,6 +195,18 @@ public class Sets {
 
     public static <E> Set<E> transform(LongSet set, LongTransformer<E> transformer) {
         return TransformedLongSet.create(set, transformer);
+    }
+
+    public static <E> Set<E> unmodifiable(Set<E> list) {
+        return UnmodifiableSet.create(list);
+    }
+
+    public static IntSet unmodifiable(IntSet list) {
+        return UnmodifiableIntSet.create(list);
+    }
+
+    public static LongSet unmodifiable(LongSet list) {
+        return UnmodifiableLongSet.create(list);
     }
 
     private Sets() {

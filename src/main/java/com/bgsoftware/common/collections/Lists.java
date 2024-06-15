@@ -1,6 +1,7 @@
 package com.bgsoftware.common.collections;
 
 import com.bgsoftware.common.collections.internal.Implementation;
+import com.bgsoftware.common.collections.internal.immutable.UnmodifiableList;
 import com.bgsoftware.common.collections.internal.lists.FastUtilsListsFactory;
 import com.bgsoftware.common.collections.internal.lists.JavaListsFactory;
 import com.bgsoftware.common.collections.internal.lists.ListStrategy;
@@ -9,10 +10,12 @@ import com.bgsoftware.common.collections.internal.transform.TransformedList;
 import com.bgsoftware.common.collections.ints.IntCollection;
 import com.bgsoftware.common.collections.ints.IntList;
 import com.bgsoftware.common.collections.ints.empty.EmptyIntList;
+import com.bgsoftware.common.collections.ints.immutable.UnmodifiableIntList;
 import com.bgsoftware.common.collections.ints.transform.TransformedIntList;
 import com.bgsoftware.common.collections.longs.LongCollection;
 import com.bgsoftware.common.collections.longs.LongList;
 import com.bgsoftware.common.collections.longs.empty.EmptyLongList;
+import com.bgsoftware.common.collections.longs.immutable.UnmodifiableLongList;
 import com.bgsoftware.common.collections.longs.transform.TransformedLongList;
 import com.bgsoftware.common.collections.transform.IntTransformer;
 import com.bgsoftware.common.collections.transform.LongTransformer;
@@ -104,6 +107,18 @@ public class Lists {
 
     public static <E> List<E> transform(LongList list, LongTransformer<E> transformer) {
         return TransformedLongList.create(list, transformer);
+    }
+
+    public static <E> List<E> unmodifiable(List<E> list) {
+        return UnmodifiableList.create(list);
+    }
+
+    public static IntList unmodifiable(IntList list) {
+        return UnmodifiableIntList.create(list);
+    }
+
+    public static LongList unmodifiable(LongList list) {
+        return UnmodifiableLongList.create(list);
     }
 
     private Lists() {

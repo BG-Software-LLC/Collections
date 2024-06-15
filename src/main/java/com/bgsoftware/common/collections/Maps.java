@@ -1,6 +1,7 @@
 package com.bgsoftware.common.collections;
 
 import com.bgsoftware.common.collections.internal.Implementation;
+import com.bgsoftware.common.collections.internal.immutable.UnmodifiableMap;
 import com.bgsoftware.common.collections.internal.maps.FastUtilsMapsFactory;
 import com.bgsoftware.common.collections.internal.maps.JavaMapsFactory;
 import com.bgsoftware.common.collections.internal.maps.MapStrategy;
@@ -12,6 +13,9 @@ import com.bgsoftware.common.collections.ints.Object2IntMap;
 import com.bgsoftware.common.collections.ints.empty.EmptyInt2IntMap;
 import com.bgsoftware.common.collections.ints.empty.EmptyInt2ObjectMap;
 import com.bgsoftware.common.collections.ints.empty.EmptyObject2IntMap;
+import com.bgsoftware.common.collections.ints.immutable.UnmodifiableInt2IntMap;
+import com.bgsoftware.common.collections.ints.immutable.UnmodifiableInt2ObjectMap;
+import com.bgsoftware.common.collections.ints.immutable.UnmodifiableObject2IntMap;
 import com.bgsoftware.common.collections.ints.transform.TransformedInt2ObjectMap;
 import com.bgsoftware.common.collections.ints.transform.TransformedObject2IntMap;
 import com.bgsoftware.common.collections.longs.Long2LongMap;
@@ -20,6 +24,9 @@ import com.bgsoftware.common.collections.longs.Object2LongMap;
 import com.bgsoftware.common.collections.longs.empty.EmptyLong2LongMap;
 import com.bgsoftware.common.collections.longs.empty.EmptyLong2ObjectMap;
 import com.bgsoftware.common.collections.longs.empty.EmptyObject2LongMap;
+import com.bgsoftware.common.collections.longs.immutable.UnmodifiableLong2LongMap;
+import com.bgsoftware.common.collections.longs.immutable.UnmodifiableLong2ObjectMap;
+import com.bgsoftware.common.collections.longs.immutable.UnmodifiableObject2LongMap;
 import com.bgsoftware.common.collections.longs.transform.TransformedLong2ObjectMap;
 import com.bgsoftware.common.collections.longs.transform.TransformedObject2LongMap;
 import com.bgsoftware.common.collections.transform.Transformer;
@@ -334,6 +341,34 @@ public class Maps {
 
     public static <K1, K2> Object2LongMap<K2> transform(Object2LongMap<K1> map, Transformer<K1, K2> keysTransformer) {
         return new TransformedObject2LongMap<>(map, keysTransformer);
+    }
+
+    public static <K, V> Map<K, V> unmodifiable(Map<K, V> map) {
+        return UnmodifiableMap.create(map);
+    }
+
+    public static Int2IntMap unmodifiable(Int2IntMap map) {
+        return UnmodifiableInt2IntMap.create(map);
+    }
+
+    public static <V> Int2ObjectMap<V> unmodifiable(Int2ObjectMap<V> map) {
+        return UnmodifiableInt2ObjectMap.create(map);
+    }
+
+    public static <K> Object2IntMap<K> unmodifiable(Object2IntMap<K> map) {
+        return UnmodifiableObject2IntMap.create(map);
+    }
+
+    public static Long2LongMap unmodifiable(Long2LongMap map) {
+        return UnmodifiableLong2LongMap.create(map);
+    }
+
+    public static <V> Long2ObjectMap<V> unmodifiable(Long2ObjectMap<V> map) {
+        return UnmodifiableLong2ObjectMap.create(map);
+    }
+
+    public static <K> Object2LongMap<K> unmodifiable(Object2LongMap<K> map) {
+        return UnmodifiableObject2LongMap.create(map);
     }
 
     private Maps() {

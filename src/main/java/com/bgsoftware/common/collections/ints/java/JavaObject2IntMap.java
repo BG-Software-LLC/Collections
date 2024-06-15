@@ -10,6 +10,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.ToIntFunction;
 
 public class JavaObject2IntMap<K> implements Object2IntMap<K> {
 
@@ -83,6 +84,26 @@ public class JavaObject2IntMap<K> implements Object2IntMap<K> {
     @Override
     public Map<K, Integer> handle() {
         return this.handle;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.handle.isEmpty();
+    }
+
+    @Override
+    public boolean containsKey(K key) {
+        return this.handle.containsKey(key);
+    }
+
+    @Override
+    public int getOrDefault(K key, int def) {
+        return this.handle.getOrDefault(key, def);
+    }
+
+    @Override
+    public int computeIfAbsent(K key, ToIntFunction<K> mappingFunction) {
+        return this.handle.computeIfAbsent(key, mappingFunction::applyAsInt);
     }
 
     @Override

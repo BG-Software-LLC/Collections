@@ -1,6 +1,7 @@
 package com.bgsoftware.common.collections.ints.java;
 
 import com.bgsoftware.common.annotations.NotNull;
+import com.bgsoftware.common.collections.ints.Int2IntFunction;
 import com.bgsoftware.common.collections.ints.Int2IntMap;
 import com.bgsoftware.common.collections.ints.IntCollection;
 import com.bgsoftware.common.collections.ints.IntIterator;
@@ -11,6 +12,7 @@ import java.util.Iterator;
 import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
+import java.util.function.Function;
 
 public class JavaInt2IntMap implements Int2IntMap {
 
@@ -85,6 +87,26 @@ public class JavaInt2IntMap implements Int2IntMap {
     @Override
     public Map<Integer, Integer> handle() {
         return this.handle;
+    }
+
+    @Override
+    public boolean isEmpty() {
+        return this.handle.isEmpty();
+    }
+
+    @Override
+    public boolean containsKey(int key) {
+        return this.handle.containsKey(key);
+    }
+
+    @Override
+    public int getOrDefault(int key, int def) {
+        return this.handle.getOrDefault(key, def);
+    }
+
+    @Override
+    public int computeIfAbsent(int key, Int2IntFunction mappingFunction) {
+        return this.handle.computeIfAbsent(key, mappingFunction::apply);
     }
 
     @Override

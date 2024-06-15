@@ -37,27 +37,13 @@ public interface Int2ObjectMap<V> {
 
     Map<Integer, V> handle();
 
-    default boolean isEmpty() {
-        return size() <= 0;
-    }
+    boolean isEmpty();
 
-    default boolean containsKey(int key) {
-        return get(key) != null;
-    }
+    boolean containsKey(int key);
 
-    default V getOrDefault(int key, V def) {
-        V value = get(key);
-        return value == null ? def : value;
-    }
+    V getOrDefault(int key, V def);
 
-    default V computeIfAbsent(int key, IntFunction<V> mappingFunction) {
-        V value = get(key);
-        if (value != null)
-            return value;
-        value = mappingFunction.apply(key);
-        put(key, value);
-        return value;
-    }
+    V computeIfAbsent(int key, IntFunction<V> mappingFunction);
 
     interface Entry<V> {
 

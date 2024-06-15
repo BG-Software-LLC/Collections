@@ -1,6 +1,7 @@
 package com.bgsoftware.common.collections.ints.fastutils;
 
 import com.bgsoftware.common.annotations.NotNull;
+import com.bgsoftware.common.collections.internal.maps.AbstractMap;
 import com.bgsoftware.common.collections.ints.Int2IntFunction;
 import com.bgsoftware.common.collections.ints.Int2IntMap;
 import com.bgsoftware.common.collections.ints.IntCollection;
@@ -9,35 +10,19 @@ import com.bgsoftware.common.collections.ints.IntSet;
 
 import java.util.AbstractSet;
 import java.util.Iterator;
-import java.util.Map;
 import java.util.OptionalInt;
 import java.util.Set;
 
-public class FastUtilsInt2IntMap implements Int2IntMap {
-
-    private final it.unimi.dsi.fastutil.ints.Int2IntMap handle;
-
-    private EntrySet entrySet;
-    private IntSet keySet;
-    private IntCollection values;
+public class FastUtilsInt2IntMap extends AbstractMap<Integer, Integer, it.unimi.dsi.fastutil.ints.Int2IntMap,
+        Set<Int2IntMap.Entry>, IntSet, IntCollection> implements Int2IntMap {
 
     public FastUtilsInt2IntMap(it.unimi.dsi.fastutil.ints.Int2IntMap handle) {
-        this.handle = handle;
+        super(handle);
     }
 
     @Override
-    public int size() {
-        return this.handle.size();
-    }
-
-    @Override
-    public void clear() {
-        this.handle.clear();
-    }
-
-    @Override
-    public Set<Entry> entrySet() {
-        return this.entrySet == null ? (this.entrySet = new EntrySet()) : this.entrySet;
+    protected Set<Entry> createEntrySet() {
+        return new EntrySet();
     }
 
     @Override
@@ -46,8 +31,8 @@ public class FastUtilsInt2IntMap implements Int2IntMap {
     }
 
     @Override
-    public IntSet keySet() {
-        return this.keySet == null ? (this.keySet = new FastUtilsIntSet(this.handle.keySet())) : this.keySet;
+    protected IntSet createKeySet() {
+        return new FastUtilsIntSet(this.handle.keySet());
     }
 
     @Override
@@ -56,8 +41,8 @@ public class FastUtilsInt2IntMap implements Int2IntMap {
     }
 
     @Override
-    public IntCollection values() {
-        return this.values == null ? (this.values = new FastUtilsIntCollection(this.handle.values())) : this.values;
+    protected IntCollection createValues() {
+        return new FastUtilsIntCollection(this.handle.values());
     }
 
     @Override
@@ -83,8 +68,8 @@ public class FastUtilsInt2IntMap implements Int2IntMap {
     }
 
     @Override
-    public Map<Integer, Integer> handle() {
-        return this.handle;
+    public boolean isEmpty() {
+        return this.handle.isEmpty();
     }
 
     @Override
@@ -100,11 +85,6 @@ public class FastUtilsInt2IntMap implements Int2IntMap {
     @Override
     public int computeIfAbsent(int key, Int2IntFunction mappingFunction) {
         return this.handle.computeIfAbsent(key, mappingFunction::apply);
-    }
-
-    @Override
-    public String toString() {
-        return this.handle.toString();
     }
 
     private class EntrySet extends AbstractSet<Entry> {

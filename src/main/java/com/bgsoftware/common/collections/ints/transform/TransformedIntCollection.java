@@ -9,7 +9,6 @@ import com.bgsoftware.common.collections.transform.Transformer;
 
 import java.util.Collection;
 import java.util.Iterator;
-import java.util.RandomAccess;
 import java.util.Spliterator;
 import java.util.function.Consumer;
 import java.util.function.Predicate;
@@ -21,16 +20,7 @@ public class TransformedIntCollection<E> implements Collection<E> {
     protected Transformer<Integer, E> boxedTransformer;
 
     public static <E> TransformedIntCollection<E> create(IntCollection handle, IntTransformer<E> transformer) {
-        return handle instanceof RandomAccess ? new RandomAccessTransformedIntCollection<>(handle, transformer) :
-                new TransformedIntCollection<>(handle, transformer);
-    }
-
-    private static class RandomAccessTransformedIntCollection<E> extends TransformedIntCollection<E> implements RandomAccess {
-
-        private RandomAccessTransformedIntCollection(IntCollection handle, IntTransformer<E> transformer) {
-            super(handle, transformer);
-        }
-
+        return new TransformedIntCollection<>(handle, transformer);
     }
 
     protected TransformedIntCollection(IntCollection handle, IntTransformer<E> transformer) {
